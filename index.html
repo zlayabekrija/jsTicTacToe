@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<button class="start">Start/Restart</button>
+<button class="start">Click here to Start/Restart</button>
 <div class="container">
-    <div class="firstplayer">
-   
+    <div class="first">
+        <div class="firstplayer names"></div>
+        <div id="fplayer" class="scores">0</div>
     </div>
-    <div id="fplayer">0</div>
     <div class="board">
         <div class="box">1</div>
         <div class="box">2</div>
@@ -26,10 +26,12 @@
         <div class="box">8</div>
         <div class="box">9</div>
     </div>
-    <div class="secondplayer">
+
+    <div class="sec">
+        <div class="secondplayer names"></div>
+        <div id="splayer" class="scores">0</div>
     </div>
-    <div id="splayer">0</div>
-    </div>
-    <script src="js/main.js"></script>
+</div>
+<script src="js/main.js"></script>
 </body>
 </html>

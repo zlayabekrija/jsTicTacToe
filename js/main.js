@@ -1,12 +1,14 @@
-// board - module
+
 let firstPlayerScore = document.getElementById('fplayer')
 let secondPlayerScore = document.getElementById('splayer');
+
+// board - module
 const Board = (() => {
 
     // let userInput = [];
     let firstPlayer = '';
     let secondPlayer = '';
-    playOn = true;
+    let playOn = true;
     let count = 0;
     let moves = {
         player1: [],
@@ -36,7 +38,7 @@ const Board = (() => {
 
     const hasUserInput = (a, b) => {
         if (CheckResult.gameOver(moves, a, b)) {
-            winCount(CheckResult.count)
+            winCount(CheckResult.count);
             playOn = false;
             restartDisplay();
             innerRestart();
@@ -45,22 +47,21 @@ const Board = (() => {
     };
     const innerRestart = () => {
         playOn = true;
-        moves = {player1:[],player2: []};
+        moves = {player1: [], player2: []};
         count = 0;
-        
+
     };
 
-    
 
     const init = () => {
-        const player1 = Player(prompt());
-        const player2 = Player(prompt());
+        const player1 = Player(prompt()) || 'Player X';
+        const player2 = Player(prompt()) || 'Player O';
         firstPlayer = player1.playerName();
         secondPlayer = player2.playerName();
         CheckResult.count.player1 = 0;
         CheckResult.count.player2 = 0;
         winCount(CheckResult.count);
-        renderNames(firstPlayer,secondPlayer);
+        renderNames(firstPlayer, secondPlayer);
         handleUserInput();
     };
     return {
@@ -92,18 +93,20 @@ const CheckResult = (() => {
         [0, 4, 8],
         [2, 4, 6]
     ];
-    let count = {player1: 0, player2: 0}
+    let count = {player1: 0, player2: 0};
 
     const winner = (moves, firstPlayer, secondPlayer) => {
         if (moves.player1.length > 2) {
             for (let i = 0; i < winningComb.length; i++) {
-                if (moves.player1.indexOf(winningComb[i][0]) !== -1 && moves.player1.indexOf(winningComb[i][1]) !== -1 && moves.player1.indexOf(winningComb[i][2]) !== -1) {
-                    alert(firstPlayer + " wins");
+                if (moves.player1.indexOf(winningComb[i][0]) !== -1 && moves.player1.indexOf(winningComb[i][1]) !== -1
+                    && moves.player1.indexOf(winningComb[i][2]) !== -1) {
+                    alert((firstPlayer || 'Player X').concat(" wins"));
                     count.player1++;
                     return true
                 }
-                if (moves.player2.indexOf(winningComb[i][0]) !== -1 && moves.player2.indexOf(winningComb[i][1]) !== -1 && moves.player2.indexOf(winningComb[i][2]) !== -1) {
-                    alert(secondPlayer + " wins");
+                if (moves.player2.indexOf(winningComb[i][0]) !== -1 && moves.player2.indexOf(winningComb[i][1]) !== -1
+                    && moves.player2.indexOf(winningComb[i][2]) !== -1) {
+                    alert((secondPlayer || 'Player O').concat(" wins"));
                     count.player2++;
                     return true;
                 }
@@ -119,14 +122,11 @@ const CheckResult = (() => {
         for (let count in moves) {
             num += moves[count].length;
         }
-        if (num === 9) {
-            return true;
-        }
-        return false;
-    }
+        return num === 9;
+    };
 
     const gameOver = (moves, firstPlayer, secondPlayer) => {
-        return winner(moves, firstPlayer, secondPlayer) || tie(moves) 
+        return winner(moves, firstPlayer, secondPlayer) || tie(moves)
     };
 
     return {
@@ -137,30 +137,27 @@ const CheckResult = (() => {
     };
 })();
 
-// Board.init();
 let start = document.querySelector('.start');
-start.addEventListener('click',()=>{
+start.addEventListener('click', () => {
     restartDisplay();
     setTimeout(() => {
         Board.init();
     }, 0);
-    
 });
 
-function restartDisplay (){
+function restartDisplay() {
     let boxes = document.querySelectorAll('.box');
-    for(let i = 0; i < boxes.length; i++){
+    for (let i = 0; i < boxes.length; i++) {
         boxes[i].innerHTML = (i + 1).toString();
     }
-      
+}
 
+function renderNames(firstPlayer, secondPlayer) {
+    document.querySelector('.firstplayer').innerText = firstPlayer || 'Player X';
+    document.querySelector('.secondplayer').innerText = secondPlayer || 'Player O';
 }
-function renderNames(firstPlayer,secondPlayer){
-    document.querySelector('.firstplayer').innerHTML = firstPlayer;
-    document.querySelector('.secondplayer').innerHTML = secondPlayer;
-}
-const winCount = (totalscore) => {
-  
-    firstPlayerScore.textContent = totalscore.player1;
-    secondPlayerScore.textContent = totalscore.player2;
-}
+
+const winCount = (totalScore) => {
+    firstPlayerScore.textContent = totalScore.player1;
+    secondPlayerScore.textContent = totalScore.player2;
+};
