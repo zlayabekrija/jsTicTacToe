@@ -25,3 +25,13 @@
 body {
     background: #000;;
 }
+#splayer,#fplayer,.firstplayer,.secondplayer{
+    width: 200px;
+    background-color: #fff;
+}
+.firstplayer{
+    float: left;
+}
+.secondplayer{
+    float: right;
+}
